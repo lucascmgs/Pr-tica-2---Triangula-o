@@ -21,36 +21,39 @@ def is_ear(vertex_index, points):
     next_point = points[next_point_index]
 
     if(dt.orient(previous_point, current_point, next_point) <= 0):
-        return None
+        return None, None
 
     possible_triangle = dt.Triangle(previous_point, current_point, next_point)
 
     for point in points:
         if possible_triangle.is_point_inside(point):
-            return None
+            return None, None
     
-    return possible_triangle
+    diagonal = [previous_point, next_point]
 
-def triangulation_recursion(points, triangles):
+    return possible_triangle, diagonal
+
+def triangulation_recursion(points, triangles, diagonals):
     initial_points_length = len(points)
     if not len(points) == 3:
         for i in range(initial_points_length):
-            orelha = is_ear(i, points)
+            orelha, diagonal = is_ear(i, points)
 
             if orelha != None :
                 triangles.append(orelha)
+                diagonals.append(diagonal)
                 del points[i]
                 break
-        return triangulation_recursion(points, triangles)
+        return triangulation_recursion(points, triangles, diagonals)
     #Acrescenta o triângulo que sobra
     else:
         new_triangle = dt.Triangle(points[0], points[1], points[2])
         triangles.append(new_triangle)
 
-    return triangles
+    return triangles, diagonals
 
 def ear_clipping_method(points):
     triangles = []
-
-    return triangulation_recursion(points, triangles)
+    diagonals = []
+    return triangulation_recursion(points, triangles, diagonals)
 

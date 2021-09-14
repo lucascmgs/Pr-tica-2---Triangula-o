@@ -1,0 +1,1 @@
+O link do notebook com a execução deste algoritmo pode ser acessado [aqui](https://colab.research.google.com/drive/1JaW79W_rbYD-6o3r0HwcaTUCYEWSWdLJ?usp=sharing)

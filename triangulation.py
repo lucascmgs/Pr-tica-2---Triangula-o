@@ -20,6 +20,8 @@ def is_ear(vertex_index, points):
         next_point_index = vertex_index+1
     next_point = points[next_point_index]
 
+    #Checamos se os pontos são convexos seguindo a orientação anti-horária.
+    #Ou seja, verificamos se o vértice na "ponta" da possível orelha "aponta para fora" do polígono
     if(dt.orient(previous_point, current_point, next_point) <= 0):
         return None, None
 
@@ -38,14 +40,14 @@ def triangulation_recursion(points, triangles, diagonals):
     if not len(points) == 3:
         for i in range(initial_points_length):
             orelha, diagonal = is_ear(i, points)
-
+            #Caso tenhamos encontrado uma orelha no vértice atual, retornamos ela e deletamos o vértice da lista
             if orelha != None :
                 triangles.append(orelha)
                 diagonals.append(diagonal)
                 del points[i]
                 break
         return triangulation_recursion(points, triangles, diagonals)
-    #Acrescenta o triângulo que sobra
+    #A base da recursão. Quando restam apenas três vértices, eles devem ser retornados
     else:
         new_triangle = dt.Triangle(points[0], points[1], points[2])
         triangles.append(new_triangle)

@@ -43,8 +43,8 @@ for t in triangles:
     triangle_plotter = t.to_plt_artist()
     axes.add_artist(triangle_plotter)
 
-# axes.plot()
-# plt.show()
+axes.plot()
+plt.show()
 
 
 result_file = open("diagonals2.txt", "w+")
